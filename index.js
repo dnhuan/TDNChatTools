@@ -21,17 +21,21 @@ async function processArray(res) {
         legit++
         User.findOne({'_id':UserA.connect},(err,UserB)=>{
             if(err) throw err
-            if(UserB.status != 2){
+            dem++
+            if(UserA._id == UserA.connect) console.log("1!!!!!!!!!!!!!!!")
+            console.log(dem,`:`,UserA._id,UserA.status,`<-->`,UserB._id,UserB.status)
+            if(UserB.connect != UserA._id){
                 console.log("--------------------------------")
                 console.log('FOUND!:', UserB._id)
                 console.log(UserA)
                 console.log(UserB)
                 User.updateOne({"_id":UserA._id},{$set: {"status": 0,"connect":""}},err=>{
                     if(err) throw err
-                    else{
-                        console.log("Success updating A", UserA._id, UserA.name)
-                        dem++
-                    }
+                    console.log("Success updating A", UserA._id, UserA.name)
+                    User.updateOne({"_id":UserB._id},{$set: {"status": 0,"connect":""}},err=>{
+                        if(err) throw err
+                        console.log("Success updating B", UserB._id, UserB.name)
+                    })
                 })
             }
         })
